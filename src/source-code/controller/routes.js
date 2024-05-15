@@ -40,13 +40,12 @@ api.post("/create-order", async (request, response) => {
   }
 });
 
-// Endpoint para obtener una orden por su ID (GET)
-api.get("/get-order/id_pedido", async (request, response) => {
+api.get("/get-order/:id_pedido", async (request, response) => {
   try {
-    const orderId = request.params.id; // Utiliza el ID proporcionado en los parámetros de ruta
+    const orderId = request.params.id_pedido; // Utiliza el ID proporcionado en los parámetros de ruta
 
     // Obtener la orden de DynamoDB utilizando el ID proporcionado
-    const order = await getDynamoDBItem({ id: orderId });
+    const order = await getDynamoDBItem({ id_pedido: orderId });
 
     if (order) {
       response.status(StatusCodes.OK).json({ msg: "Orden encontrada", order });
@@ -59,13 +58,12 @@ api.get("/get-order/id_pedido", async (request, response) => {
   }
 });
 
-// Endpoint para eliminar una orden por su ID (DELETE)
-api.delete("/delete-order/:id", async (request, response) => {
+api.delete("/delete-order/:id_pedido", async (request, response) => {
   try {
-    const orderId = request.params.id; // Se utiliza el ID proporcionado en los parámetros de ruta
+    const orderId = request.params.id_pedido; // Se utiliza el ID proporcionado en los parámetros de ruta
 
     // Eliminar la orden de DynamoDB utilizando el ID proporcionado
-    await deleteDynamoDBItem({ id: orderId });
+    await deleteDynamoDBItem({ id_pedido: orderId });
 
     response.status(StatusCodes.OK).json({ msg: "Orden eliminada correctamente" });
   } catch (error) {
