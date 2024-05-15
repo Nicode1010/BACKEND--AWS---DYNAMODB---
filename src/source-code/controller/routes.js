@@ -21,28 +21,17 @@ const {
 
 const api = express.Router();
 
+// Endpoint para crear una orden (POST)
 api.post("/create-order", async (request, response) => {
   try {
-    console.info("BODY", request.body);
+    const orderData = request.body; // Utiliza los datos del cuerpo de la solicitud
 
-    const item = {
-      ...request.body,
-      visible: true,
-    };
-/*
-    // Put the item in DynamoDB
-    await putDynamoDBItem(item);
+    // Guardar la orden en DynamoDB
+    await putDynamoDBItem(orderData);
 
-    // Get the item from DynamoDBB
-    const dynamoDBItem = await getDynamoDBItem({ id: item.id });
-    console.info(`DynamoDB Item With ID ${item.id}`, dynamoDBItem);
-
-    // Delete the item from DynamoDB
-    await deleteDynamoDBItem({ id: item.id });
-*/
     response
       .status(StatusCodes.OK)
-      .json({ msg: "Tu orden ha sido creada" });
+      .json({ msg: "Tu orden ha sido creada", orderData });
   } catch (error) {
     console.error("Error", error);
     response
@@ -51,6 +40,40 @@ api.post("/create-order", async (request, response) => {
   }
 });
 
+// Endpoint para obtener una orden por su ID (GET)
+api.get("/get-order/id_pedido", async (request, response) => {
+  try {
+    const orderId = request.params.id; // Utiliza el ID proporcionado en los parámetros de ruta
+
+    // Obtener la orden de DynamoDB utilizando el ID proporcionado
+    const order = await getDynamoDBItem({ id: orderId });
+
+    if (order) {
+      response.status(StatusCodes.OK).json({ msg: "Orden encontrada", order });
+    } else {
+      response.status(StatusCodes.NOT_FOUND).json({ msg: "Orden no encontrada" });
+    }
+  } catch (error) {
+    console.error("Error", error);
+    response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Internal Server Error" });
+  }
+});
+
+// Endpoint para eliminar una orden por su ID (DELETE)
+api.delete("/delete-order/:id", async (request, response) => {
+  try {
+    const orderId = request.params.id; // Se utiliza el ID proporcionado en los parámetros de ruta
+
+    // Eliminar la orden de DynamoDB utilizando el ID proporcionado
+    await deleteDynamoDBItem({ id: orderId });
+
+    response.status(StatusCodes.OK).json({ msg: "Orden eliminada correctamente" });
+  } catch (error) {
+    console.error("Error", error);
+    response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ msg: "Internal Server Error" });
+  }
+});
+/*
 api.post("/path2", upload.single("file"), async (request, response) => {
   try {
     console.info("BODY", request.file);
@@ -86,5 +109,5 @@ api.post("/path2", upload.single("file"), async (request, response) => {
       .json({ msg: "Internal Server Error" });
   }
 });
-
+*/
 module.exports = api;
