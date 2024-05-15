@@ -1,4 +1,4 @@
-# BACKEND RESTAURANTE - AWS - DYNAMODB - EXPRESS - SERVICES REST 
+# BACKEND RESTAURANTE - JavaScript - AWS - DYNAMODB - EXPRESS - SERVICES REST 
 
 Aquí se ha creado una API utilizando Express para interactuar con una base de datos DynamoDB y realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre órdenes de un restaurante.
 
