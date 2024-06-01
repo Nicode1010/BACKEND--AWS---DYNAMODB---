@@ -4,6 +4,7 @@ const {
   GetCommand,
   PutCommand,
   DeleteCommand,
+  ScanCommand, // Agregamos ScanCommand para obtener todos los elementos de la tabla
 } = require("@aws-sdk/lib-dynamodb");
 
 const { AWS_REGION, DYNAMODB_TABLE } = require("../utils/constants");
@@ -65,8 +66,27 @@ const deleteDynamoDBItem = async (key) => {
   }
 }
 
+// Función para obtener todos los elementos de la tabla
+const getAllDynamoDBItems = async () => {
+  const params = {
+    TableName: DYNAMODB_TABLE,
+  };
+  console.info("SCAN PARAMS", params);
+
+  try {
+    const command = new ScanCommand(params);
+    const response = await dynamodb.send(command);
+
+    return response.Items;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
 module.exports = {
   getDynamoDBItem,
   putDynamoDBItem,
   deleteDynamoDBItem,
+  getAllDynamoDBItems, // Agregamos la función para obtener todos los elementos
 };
