@@ -67,8 +67,9 @@ const deleteDynamoDBItem = async (key) => {
 }
 
 // Función para obtener todos los elementos de la tabla
+//async indica que esta funcion sera asincrona y devolvera una promesa
 const getAllDynamoDBItems = async () => {
-  const params = {
+  const params = { //objeto params que contiene los parametros para la operacion scan
     TableName: DYNAMODB_TABLE,
   };
   console.info("SCAN PARAMS", params);
