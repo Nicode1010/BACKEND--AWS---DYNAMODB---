@@ -26,6 +26,3 @@ En la segunda entrega del proyecto, se ha logrado lo siguiente:
 - En la segunda entrega del proyecto, se ha desarrollado el frontend para consumir el backend de manera más intuitiva y eficiente. La interfaz de usuario se ha diseñado utilizando el concepto de tarjetas (cards), lo que proporciona una experiencia visual agradable y fácil de entender para los usuarios.
 
 Además, se ha implementado un nuevo endpoint para generar un escaneo completo de la base de datos DynamoDB, con el fin de recuperar todos los datos almacenados en ella. Este endpoint permite obtener una visión completa de la información presente en la base de datos, lo que resulta útil para diversos fines, como análisis de datos o generación de informes.
-
-Con estas mejoras, se ha fortalecido la funcionalidad del sistema, proporcionando una interfaz más amigable para los usuarios y ampliando las capacidades de recuperación de datos del backend.
-- 
